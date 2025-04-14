@@ -282,7 +282,8 @@ public class ShowAuctionsTabFragment extends Fragment {
                     assert item != null;
                     if (item.sellerId.equals(firebaseUser.getUid())) {
                         item.seller = usersMap.get(item.sellerId);
-                        categories.add(item.category);
+                        if(!categories.contains(item.category))
+                            categories.add(item.category);
                         allAuctions.add(item);
                     }
                 }

@@ -281,6 +281,10 @@ public class SellerCreateAuctionFragment extends Fragment {
         ((AutoCompleteTextView) binding.durationUnit.getEditText()).setAdapter(adapter1);
         ((AutoCompleteTextView) binding.durationUnit.getEditText()).setText("Minutes", false); // false = no filtering animation
 
+        binding.toolbar.setNavigationOnClickListener(v->
+                Navigation.findNavController(requireActivity(), R.id.nav_seller_host_fragment)
+                        .popBackStack());
+
         return binding.getRoot();
     }
 
