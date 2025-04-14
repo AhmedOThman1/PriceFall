@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Price Fall</string>
+    <string name="app_name">Reverse Auction</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>

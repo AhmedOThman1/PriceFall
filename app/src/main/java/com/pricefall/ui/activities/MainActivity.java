@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             if (!alarmManager.canScheduleExactAlarms()) {
                 // Show a dialog or guide user to settings
-                Toast.makeText(this, "Allow Price Fall App to schedule exact alarms and alarms", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Allow Price Reverse Auction App to schedule exact alarms and alarms", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
                 startActivity(i);
             }
