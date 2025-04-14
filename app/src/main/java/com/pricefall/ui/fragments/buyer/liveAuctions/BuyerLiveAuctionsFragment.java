@@ -221,6 +221,7 @@ public class BuyerLiveAuctionsFragment extends Fragment {
             dialogBinding.notifyMe.setOnClickListener(v2 -> {
                 //TO DO Make notification when auction start
                 if(price[0] < selectedAuction.minimumPrice){
+                    Toast.makeText(requireContext(), "You will be notified when auction reaches your price target.", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     return;
                 }
