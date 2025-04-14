@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_seller_graph.xml"
+    app:startDestination="@id/sellerShowAuctionsFragment">
+
+    <fragment
+        android:id="@+id/sellerShowAuctionsFragment"
+        android:name="com.pricefall.ui.fragments.seller.auctions.SellerShowAuctionsFragment"
+        android:label="fragment_seller_auctions"
+        tools:layout="@layout/fragment_seller_auctions" >
+        <action
+            android:id="@+id/action_sellerShowAuctionsFragment_to_sellerCreateAuctionFragment"
+            app:destination="@id/sellerCreateAuctionFragment" />
+        <action
+            android:id="@+id/action_sellerShowAuctionsFragment_to_showAuctionsTabFragment"
+            app:destination="@id/showAuctionsTabFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerCreateAuctionFragment"
+        android:name="com.pricefall.ui.fragments.seller.auctions.add.SellerCreateAuctionFragment"
+        android:label="fragment_seller_create_auction"
+        tools:layout="@layout/fragment_seller_create_auction" />
+    <fragment
+        android:id="@+id/showAuctionsTabFragment"
+        android:name="com.pricefall.ui.fragments.seller.auctions.tab.ShowAuctionsTabFragment"
+        android:label="fragment_seller_auctions_tab"
+        tools:layout="@layout/fragment_seller_auctions_tab" >
+        <action
+            android:id="@+id/action_showAuctionsTabFragment_to_sellerCreateAuctionFragment"
+            app:destination="@id/sellerCreateAuctionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/showPurchasedAuctionsFragment"
+        android:name="com.pricefall.ui.fragments.common.purchased.ShowPurchasedAuctionsFragment"
+        android:label="fragment_show_purchased_auctions"
+        tools:layout="@layout/fragment_show_purchased_auctions" />
+
+
+    <fragment
+        android:id="@+id/showEditProfileFragment"
+        android:name="com.pricefall.ui.fragments.common.profile.ShowEditProfileFragment"
+        android:label="fragment_seller_edit_profile"
+        tools:layout="@layout/fragment_show_edit_profile" />
+    <fragment
+        android:id="@+id/sellerStatisticsFragment"
+        android:name="com.pricefall.ui.fragments.seller.sales.SellerStatisticsFragment"
+        android:label="fragment_seller_statistics"
+        tools:layout="@layout/fragment_seller_statistics" />
+
+</navigation>

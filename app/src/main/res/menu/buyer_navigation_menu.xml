@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_live_auction"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_upcoming_offers"
+        android:icon="@drawable/upcoming"
+        android:title="" />
+
+
+    <item
+        android:id="@+id/nav_payment_history"
+        android:icon="@drawable/payments"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/profile"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/logout"
+        android:title="@string/logout" />
+
+</menu>

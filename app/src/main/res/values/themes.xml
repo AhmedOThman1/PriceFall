@@ -1,0 +1,59 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.PriceFall" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/colorBackground</item>
+    </style>
+
+
+
+    <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/card_custom_corners</item>
+    </style>
+
+    <style name="card_custom_corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">150dp</item>
+        <item name="cornerSizeTopLeft">150dp</item>
+        <item name="cornerSizeBottomRight">35dp</item>
+        <item name="cornerSizeBottomLeft">35dp</item>
+    </style>
+
+    <style name="CustomCardViewStyle2" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/card_custom_corners2</item>
+    </style>
+
+    <style name="card_custom_corners2" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">35dp</item>
+        <item name="cornerSizeTopLeft">35dp</item>
+        <item name="cornerSizeBottomRight">150dp</item>
+        <item name="cornerSizeBottomLeft">150dp</item>
+    </style>
+
+    <style name="CustomCardViewStyle3" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/card_custom_corners3</item>
+    </style>
+
+    <style name="card_custom_corners3" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">10dp</item>
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeBottomRight">56dp</item>
+        <item name="cornerSizeBottomLeft">56dp</item>
+    </style>
+
+    <style name="TabWidget">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/tablayout_state_text_color_white</item>
+    </style>
+</resources>

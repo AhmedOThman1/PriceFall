@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="dark">#FF303030</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="shimmer">#EEE7E7E7</color>
+    <color name="colorPrimary">#01ff01</color>
+    <color name="colorPrimaryVariant">#27702A</color>
+    <color name="colorSecondary">#4CAF50</color>
+    <color name="red">#F44336</color>
+    <color name="dark_red">#99E3141C</color>
+    <color name="green">#4CAF50</color>
+    <color name="greena">#A3FFA7</color>
+    <color name="colorBackground">#292830</color>
+    <color name="gray">#F3E6FF</color>
+</resources>

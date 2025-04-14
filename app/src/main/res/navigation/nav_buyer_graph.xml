@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_buyer_graph.xml"
+    app:startDestination="@id/buyerLiveAuctionsFragment">
+    <fragment
+        android:id="@+id/buyerLiveAuctionsFragment"
+        android:name="com.pricefall.ui.fragments.buyer.liveAuctions.BuyerLiveAuctionsFragment"
+        android:label="fragment_buyer_live_auctions"
+        tools:layout="@layout/fragment_buyer_live_auctions" >
+        <action
+            android:id="@+id/action_buyerLiveAuctionsFragment_to_buyerBuyAuctionFragment"
+            app:destination="@id/buyerBuyAuctionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/buyerUpcomingAuctionsFragment"
+        android:name="com.pricefall.ui.fragments.buyer.upcomingAuctions.BuyerUpcomingAuctionsFragment"
+        android:label="fragment_buyer_upcoming_auctions"
+        tools:layout="@layout/fragment_buyer_upcoming_auctions" />
+    <fragment
+        android:id="@+id/buyerBuyAuctionFragment"
+        android:name="com.pricefall.ui.fragments.buyer.buyAuction.BuyerBuyAuctionFragment"
+        android:label="fragment_buyer_buy_auction"
+        tools:layout="@layout/fragment_buyer_buy_auction" />
+
+    <fragment
+        android:id="@+id/showEditProfileFragment"
+        android:name="com.pricefall.ui.fragments.common.profile.ShowEditProfileFragment"
+        android:label="fragment_seller_edit_profile"
+        tools:layout="@layout/fragment_show_edit_profile" />
+    <fragment
+        android:id="@+id/showPurchasedAuctionsFragment"
+        android:name="com.pricefall.ui.fragments.common.purchased.ShowPurchasedAuctionsFragment"
+        android:label="fragment_show_purchased_auctions"
+        tools:layout="@layout/fragment_show_purchased_auctions" />
+
+</navigation>
