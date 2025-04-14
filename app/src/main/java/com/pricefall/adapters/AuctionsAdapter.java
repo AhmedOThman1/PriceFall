@@ -188,7 +188,7 @@ public class AuctionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
             dialogBinding.minus.setOnClickListener(v2 -> {
-                if (price[0] - 1 > Models.get(position).minimumPrice) {
+                if (price[0] - 1 > 0) {
                     price[0]--;
                     dialogBinding.price.setText(price[0] + " KD");
                 }
@@ -196,6 +196,11 @@ public class AuctionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             dialogBinding.notifyMe.setOnClickListener(v2 -> {
                 //TO DO Make notification when auction start
+                if(price[0] < Models.get(position).minimumPrice){
+                    Toast.makeText(context, "You will be notified when auction reaches your price target.", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    return;
+                }
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                 if (alarmManager == null) return;
 

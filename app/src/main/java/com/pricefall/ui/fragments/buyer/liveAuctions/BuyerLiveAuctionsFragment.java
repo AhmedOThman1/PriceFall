@@ -212,7 +212,7 @@ public class BuyerLiveAuctionsFragment extends Fragment {
                 }
             });
             dialogBinding.minus.setOnClickListener(v2 -> {
-                if (price[0] - 1 > selectedAuction.minimumPrice) {
+                if (price[0] - 1 > 0) {
                     price[0]--;
                     dialogBinding.price.setText(price[0] + " KD");
                 }
@@ -220,6 +220,10 @@ public class BuyerLiveAuctionsFragment extends Fragment {
 
             dialogBinding.notifyMe.setOnClickListener(v2 -> {
                 //TO DO Make notification when auction start
+                if(price[0] < selectedAuction.minimumPrice){
+                    dialog.dismiss();
+                    return;
+                }
                 AlarmManager alarmManager = (AlarmManager) requireContext().getSystemService(Context.ALARM_SERVICE);
                 if (alarmManager == null) return;
 
@@ -252,7 +256,8 @@ public class BuyerLiveAuctionsFragment extends Fragment {
 //                    binding.notifyMe.setText("Notify Me");
 //                    binding.notifyMe.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
 //                    }, 1000);
-                } else {
+                }
+                else {
                     // Create a new PendingIntent to schedule the alarm
                     PendingIntent newIntent = PendingIntent.getBroadcast(
                             requireContext(),
