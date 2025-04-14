@@ -118,9 +118,9 @@ public class BuyerUpcomingAuctionsFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(@NonNull RangeSlider slider) {
                 Log.w("Range", slider.getValues().toString());
-                    startPrice = slider.getValues().get(0);
-                    endPrice = slider.getValues().get(1);
-                    filterAuctions();
+                startPrice = slider.getValues().get(0);
+                endPrice = slider.getValues().get(1);
+                filterAuctions();
             }
         });
         binding.priceRangeSlider.setValues(0f, 0f); // Set two values for two thumbs
@@ -277,7 +277,8 @@ public class BuyerUpcomingAuctionsFragment extends Fragment {
                     Auction item = dataSnapshot.getValue(Auction.class);
                     assert item != null;
                     item.seller = usersMap.get(item.sellerId);
-                    categories.add(item.category);
+                    if (!categories.contains(item.category))
+                        categories.add(item.category);
                     allAuctions.add(item);
                 }
 
