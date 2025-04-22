@@ -1,5 +1,7 @@
 package com.pricefall.pojo;
 
+import android.util.Log;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -93,6 +95,7 @@ public class Auction {
         if (currentTimeMillis >= endTimeMillis)
             return DONE;
 
+        Log.w("Quantity", "" + quantity + "," + quantitySold);
 
         if (quantity == quantitySold)
             return DONE;
@@ -102,5 +105,14 @@ public class Auction {
 
     public int getIdAsInt() {
         return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Auction{" +
+                "id='" + id + '\'' +
+                ", quantitySold=" + quantitySold +
+                ", quantity=" + quantity +
+                '}';
     }
 }

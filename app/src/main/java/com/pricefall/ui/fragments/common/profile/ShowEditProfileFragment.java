@@ -39,6 +39,8 @@ import com.google.firebase.storage.StorageReference;
 import com.pricefall.R;
 import com.pricefall.databinding.FragmentShowEditProfileBinding;
 import com.pricefall.pojo.User;
+import com.pricefall.ui.fragments.buyer.main.BuyerMainFragment;
+import com.pricefall.ui.fragments.seller.main.SellerMainFragment;
 
 public class ShowEditProfileFragment extends Fragment {
     FragmentShowEditProfileBinding binding;
@@ -144,6 +146,11 @@ public class ShowEditProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentUser = snapshot.getValue(User.class);
 
+                if(currentUser.userType==User.BUYER)
+                    BuyerMainFragment.bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+                else
+                    SellerMainFragment.bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+
                 initUI();
             }
 
@@ -182,15 +189,18 @@ public class ShowEditProfileFragment extends Fragment {
                         editProfile();
                     } else {
                         binding.loading.setVisibility(View.GONE);
+                        binding.editProfile.setEnabled(true);
                         Toast.makeText(requireContext(), "Failed, try again!", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(e -> {
                     binding.loading.setVisibility(View.GONE);
+                    binding.editProfile.setEnabled(true);
                     Toast.makeText(requireContext(), "Failed, try again!", Toast.LENGTH_SHORT).show();
                 });
             }
         }).addOnFailureListener(e -> {
             binding.loading.setVisibility(View.GONE);
+            binding.editProfile.setEnabled(true);
             Toast.makeText(requireContext(), "Make sure that the current password is correct", Toast.LENGTH_SHORT).show();
         });
 
@@ -219,7 +229,9 @@ public class ShowEditProfileFragment extends Fragment {
             binding.loading.setVisibility(GONE);
             binding.editProfile.setEnabled(true);
             closeKeyboard(requireActivity());
-            Navigation.findNavController(requireActivity(), R.id.nav_seller_host_fragment).popBackStack();
+            Navigation.findNavController(requireActivity(),
+                    currentUser.userType == User.BUYER ? R.id.nav_buyer_host_fragment :
+                    R.id.nav_seller_host_fragment).popBackStack();
         });
     }
 

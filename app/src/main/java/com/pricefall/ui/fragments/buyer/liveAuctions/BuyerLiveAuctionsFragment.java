@@ -58,6 +58,7 @@ import com.pricefall.models.RecyclerViewTouchListener;
 import com.pricefall.pojo.Auction;
 import com.pricefall.pojo.Payment;
 import com.pricefall.pojo.User;
+import com.pricefall.ui.fragments.buyer.main.BuyerMainFragment;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -68,6 +69,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class BuyerLiveAuctionsFragment extends Fragment {
     FragmentBuyerLiveAuctionsBinding binding;
@@ -90,6 +92,8 @@ public class BuyerLiveAuctionsFragment extends Fragment {
 
         binding = FragmentBuyerLiveAuctionsBinding.inflate(inflater, container, false);
 
+        BuyerMainFragment.bottomNavigationView.setSelectedItemId(R.id.nav_live_auction);
+        selectedAuction = null;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
         usersRef = database.getReference("Users");
@@ -220,7 +224,7 @@ public class BuyerLiveAuctionsFragment extends Fragment {
 
             dialogBinding.notifyMe.setOnClickListener(v2 -> {
                 //TO DO Make notification when auction start
-                if(price[0] < selectedAuction.minimumPrice){
+                if (price[0] < selectedAuction.minimumPrice) {
                     Toast.makeText(requireContext(), "You will be notified when auction reaches your price target.", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     return;
@@ -257,8 +261,7 @@ public class BuyerLiveAuctionsFragment extends Fragment {
 //                    binding.notifyMe.setText("Notify Me");
 //                    binding.notifyMe.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
 //                    }, 1000);
-                }
-                else {
+                } else {
                     // Create a new PendingIntent to schedule the alarm
                     PendingIntent newIntent = PendingIntent.getBroadcast(
                             requireContext(),
@@ -377,6 +380,7 @@ public class BuyerLiveAuctionsFragment extends Fragment {
         public void run() {
             // Notify adapter to update visible countdowns
             checkItems();
+            Log.w("Selected", "" + selectedAuction);
             if (selectedAuction == null) {
                 if (auctions.isEmpty()) {
                     handler.postDelayed(this, 1000); // Run again after 1 second
@@ -387,12 +391,15 @@ public class BuyerLiveAuctionsFragment extends Fragment {
                 openAuction();
                 handler.postDelayed(this, 1000); // Run again after 1 second
                 return;
-            }
+            } else if (auctions.isEmpty()){
+                selectedAuction = null;
+            }else
+                selectedAuction = AuctionId != null ? allAuctions.stream().filter(a -> a.id.equals(AuctionId)).findFirst().orElse(auctions.get(0)) : auctions.get(0);
             long currentTime = System.currentTimeMillis();
             long startTime = selectedAuction.startTime;
             long endTime = startTime + selectedAuction.durationInMillis;
             // Auction hasn't started yet
-            Log.w("Running", "" + selectedAuction + "," + (currentTime < startTime) + "," + (endTime >= currentTime));
+            Log.w("Running@", "" + selectedAuction + "," + (currentTime < startTime) + "," + (endTime >= currentTime));
             if (currentTime < startTime) {
                 binding.timer.setVisibility(VISIBLE);
                 binding.dateTime.setVisibility(VISIBLE);
@@ -471,10 +478,10 @@ public class BuyerLiveAuctionsFragment extends Fragment {
 
     void checkItems() {
         int firstCompletelyVisibleItemPosition = layoutManager.findFirstCompletelyVisibleItemPosition();
-        binding.startArrow.setVisibility(firstCompletelyVisibleItemPosition != 0 &&!auctions.isEmpty()? View.VISIBLE : GONE);
+        binding.startArrow.setVisibility(firstCompletelyVisibleItemPosition != 0 && !auctions.isEmpty() ? View.VISIBLE : GONE);
 
         int lastCompletelyVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
-        binding.endArrow.setVisibility(lastCompletelyVisibleItemPosition != auctions.size() - 1 &&!auctions.isEmpty()? View.VISIBLE : GONE);
+        binding.endArrow.setVisibility(lastCompletelyVisibleItemPosition != auctions.size() - 1 && !auctions.isEmpty() ? View.VISIBLE : GONE);
 
         int size = auctions.size();
         for (Auction auction : allAuctions) {
@@ -484,6 +491,14 @@ public class BuyerLiveAuctionsFragment extends Fragment {
                 auctions.remove(auction);
             if (!auctions.contains(auction) && (auction.getAuctionStatus(System.currentTimeMillis()) == LIVE || (auction.getAuctionStatus(System.currentTimeMillis()) == UPCOMING && isAuctionToday(auction.startTime))))
                 auctions.add(auction);
+        }
+        Log.w("Auctions", "" + auctions.size());
+        if (selectedAuction != null && auctions.stream().filter((a) -> a.id.equals(selectedAuction.id)).collect(Collectors.toList()).isEmpty()) {
+            Log.w("Selected", "Should be null" + selectedAuction);
+            selectedAuction = null;
+            auctionAdapter.setModels(auctions);
+            auctionAdapter.notifyDataSetChanged();
+            binding.auctionLayout.setVisibility(auctions.isEmpty() && isAuctionsLoaded ? GONE : VISIBLE);
         }
 
         binding.emptyStates.setVisibility(auctions.isEmpty() && isAuctionsLoaded ? View.VISIBLE : View.GONE);
@@ -530,6 +545,7 @@ public class BuyerLiveAuctionsFragment extends Fragment {
 
     ArrayList<Auction> allAuctions = new ArrayList<>();
     boolean isAuctionsLoaded = false;
+
     private void getAuction() {
         // Read from the database
         auctionsRef.addValueEventListener(new ValueEventListener() {
@@ -565,7 +581,7 @@ public class BuyerLiveAuctionsFragment extends Fragment {
                 Payment payment = snapshot.getValue(Payment.class);
                 if (payment != null && selectedAuction != null && payment.auctionId.equals(selectedAuction.id)) {
                     if (TimeUnit.MILLISECONDS.toMinutes(payment.date - System.currentTimeMillis()) < 2) {
-                        showSnackBar(usersMap.get(payment.userId).name + " Bought " + (payment.quantity == 1 ? " " : payment.quantity + " ") + "at " + formatPrice(payment.price,true));
+                        showSnackBar(usersMap.get(payment.userId).name + " Bought " + (payment.quantity == 1 ? " " : payment.quantity + " ") + "at " + formatPrice(payment.price, true));
                     }
                 }
             }

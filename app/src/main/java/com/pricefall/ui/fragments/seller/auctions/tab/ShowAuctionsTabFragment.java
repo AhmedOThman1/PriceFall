@@ -61,6 +61,9 @@ public class ShowAuctionsTabFragment extends Fragment {
     public ShowAuctionsTabFragment(int mode) {
         this.mode = mode;
     }
+    public ShowAuctionsTabFragment() {
+        this.mode = UPCOMING;
+    }
 
     @Nullable
     @Override

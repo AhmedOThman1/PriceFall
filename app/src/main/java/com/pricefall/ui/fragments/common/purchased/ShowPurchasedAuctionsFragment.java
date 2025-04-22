@@ -28,6 +28,8 @@ import com.pricefall.databinding.FragmentShowPurchasedAuctionsBinding;
 import com.pricefall.pojo.Auction;
 import com.pricefall.pojo.Payment;
 import com.pricefall.pojo.User;
+import com.pricefall.ui.fragments.buyer.main.BuyerMainFragment;
+import com.pricefall.ui.fragments.seller.main.SellerMainFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,6 +108,7 @@ public class ShowPurchasedAuctionsFragment extends Fragment {
 
     Map<String, User> usersMap = new HashMap<>();
 
+    User currentUser;
     private void getClients() {
         // Read from the database
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -118,7 +121,13 @@ public class ShowPurchasedAuctionsFragment extends Fragment {
                     assert item != null;
                     usersMap.put(item.id, item);
                 }
-                paymentsAdapter.setSeller(usersMap.get(firebaseUser.getUid()).userType==User.SELLER);
+                currentUser = usersMap.get(firebaseUser.getUid());
+                paymentsAdapter.setSeller(currentUser.userType==User.SELLER);
+
+                if(currentUser.userType==User.BUYER)
+                    BuyerMainFragment.bottomNavigationView.setSelectedItemId(R.id.nav_payment_history);
+                else
+                    SellerMainFragment.bottomNavigationView.setSelectedItemId(R.id.nav_payment_history);
 
                 getAuction();
             }

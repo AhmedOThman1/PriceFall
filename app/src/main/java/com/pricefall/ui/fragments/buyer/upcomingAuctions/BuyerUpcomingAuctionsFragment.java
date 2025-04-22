@@ -41,6 +41,7 @@ import com.pricefall.databinding.FragmentSellerAuctionsTabBinding;
 import com.pricefall.models.RecyclerViewTouchListener;
 import com.pricefall.pojo.Auction;
 import com.pricefall.pojo.User;
+import com.pricefall.ui.fragments.buyer.main.BuyerMainFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,6 +70,9 @@ public class BuyerUpcomingAuctionsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         binding = FragmentBuyerUpcomingAuctionsBinding.inflate(inflater, container, false);
+
+
+        BuyerMainFragment.bottomNavigationView.setSelectedItemId(R.id.nav_upcoming_offers);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
