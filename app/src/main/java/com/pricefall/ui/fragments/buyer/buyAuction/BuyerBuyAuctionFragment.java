@@ -46,6 +46,8 @@ import com.pricefall.pojo.Payment;
 import com.pricefall.pojo.PaymentCardInfo;
 import com.pricefall.pojo.User;
 
+import java.text.DecimalFormat;
+
 
 public class BuyerBuyAuctionFragment extends Fragment {
     FragmentBuyerBuyAuctionBinding binding;
@@ -56,6 +58,7 @@ public class BuyerBuyAuctionFragment extends Fragment {
     DatabaseReference usersRef, auctionRef;
 
     Auction auction;
+    double price;
 
     @Nullable
     @Override
@@ -76,9 +79,10 @@ public class BuyerBuyAuctionFragment extends Fragment {
             String json = args.getString("item", "");
             if (!json.isEmpty()) {
                 auction = new Gson().fromJson(json, Auction.class);
+                price = auction.getCurrentAuctionPrice(System.currentTimeMillis());
                 auctionRef = database.getReference("Auctions").child(auction.id);
                 binding.title.setText(auction.title);
-                binding.price.setText(auction.getCurrentAuctionPriceString(System.currentTimeMillis()));
+                binding.price.setText(new DecimalFormat("#.###").format(price));
 
                 ImagesAdapter imagesAdapter = new ImagesAdapter(requireContext());
                 imagesAdapter.setModels(auction.images);
@@ -261,7 +265,6 @@ public class BuyerBuyAuctionFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     private void confirmPayment() {
         long date = System.currentTimeMillis();
-        double price = auction.getCurrentAuctionPrice(date);
 
         View view = requireActivity().getLayoutInflater().inflate(R.layout.dialog_confirm_request, null);
         AlertDialog dialog = new AlertDialog.Builder(requireContext()).setView(view).create();
@@ -322,12 +325,12 @@ public class BuyerBuyAuctionFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        handler.post(tickRunnable); // Start the timer
+        //handler.post(tickRunnable); // Start the timer
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        handler.removeCallbacks(tickRunnable); // Stop when view is gone
+        //handler.removeCallbacks(tickRunnable); // Stop when view is gone
     }
 }

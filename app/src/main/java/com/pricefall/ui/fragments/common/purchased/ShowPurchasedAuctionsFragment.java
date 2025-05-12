@@ -186,6 +186,7 @@ public class ShowPurchasedAuctionsFragment extends Fragment {
                         payments.add(item);
                     }
                 }
+                payments.sort((Payment o1, Payment o2) -> o2.date.compareTo(o1.date));
                 tempPayments.addAll(payments);
                 paymentsAdapter.setModels(payments);
                 paymentsAdapter.notifyDataSetChanged();

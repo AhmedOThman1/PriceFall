@@ -47,6 +47,7 @@ public class Auction {
         if (currentTimeMillis >= endTimeMillis) {
             return minimumPrice;
         }
+        //250 kd , 50 kd
 
         long durationSeconds = durationInMillis / 1000;
         double priceDropPerSecond = (startingPrice - minimumPrice) / durationSeconds;

@@ -9,7 +9,7 @@ public class Payment {
     public int quantity;
     public double price;
     public double totalAmount;
-    public long date;
+    public Long date;
     public ArrayList<Status> status;
 
     public Auction auction;

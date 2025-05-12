@@ -239,7 +239,8 @@ public class BuyerLiveAuctionsFragment extends Fragment {
                 intent.putExtra("title", selectedAuction.title);
                 intent.putExtra("body", "Auction reaches your price target " + price[0] + " KD");
                 intent.putExtra("id", selectedAuction.id);
-
+                Toast.makeText(requireContext(), "ID:"+selectedAuction.id, Toast.LENGTH_SHORT).show();
+                Log.w("IDHERE", "ID:"+selectedAuction.id);
 // Try to get any existing PendingIntent
                 PendingIntent existingIntent = PendingIntent.getBroadcast(
                         requireContext(),
@@ -388,13 +389,15 @@ public class BuyerLiveAuctionsFragment extends Fragment {
                 }
                 selectedAuction = AuctionId != null ? allAuctions.stream().filter(a -> a.id.equals(AuctionId)).findFirst().orElse(auctions.get(0)) : auctions.get(0);
                 binding.auctionLayout.setVisibility(VISIBLE);
+                auctionAdapter.selected = auctions.indexOf(selectedAuction);
+                auctionAdapter.notifyItemChanged(auctionAdapter.selected);
                 openAuction();
                 handler.postDelayed(this, 1000); // Run again after 1 second
                 return;
             } else if (auctions.isEmpty()){
                 selectedAuction = null;
             }else
-                selectedAuction = AuctionId != null ? allAuctions.stream().filter(a -> a.id.equals(AuctionId)).findFirst().orElse(auctions.get(0)) : auctions.get(0);
+                selectedAuction = AuctionId != null ? allAuctions.stream().filter(a -> a.id.equals(AuctionId)).findFirst().orElse(auctions.get(0)) : auctions.get(auctionAdapter.selected);
             long currentTime = System.currentTimeMillis();
             long startTime = selectedAuction.startTime;
             long endTime = startTime + selectedAuction.durationInMillis;
